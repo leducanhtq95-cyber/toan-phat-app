@@ -1,0 +1,59 @@
+name: Build iOS IPA (Unsigned)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: mobile-apk
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Capacitor dependencies
+        run: npm install
+
+      - name: Add iOS platform
+        run: npx cap add ios
+
+      - name: Generate iOS icons and splash screens
+        run: |
+          if [ -f "resources/icon.png" ] && [ -f "resources/splash.png" ]; then
+            npx capacitor-assets generate --ios --iconBackgroundColor '#FFFFFF' --splashBackgroundColor '#FFFFFF' || echo "Using default launcher icon"
+          fi
+
+      - name: Sync Capacitor configuration
+        run: npx cap sync ios
+
+      - name: Build Unsigned iOS App
+        run: |
+          if [ -f "ios/App/Podfile" ]; then
+            cd ios/App && pod install && cd ../..
+          fi
+          if [ -d "ios/App/App.xcworkspace" ]; then
+            xcodebuild -workspace ios/App/App.xcworkspace -scheme App -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" SYMROOT="$PWD/ios-build" build
+          else
+            xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" SYMROOT="$PWD/ios-build" build
+          fi
+
+      - name: Package Unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -r ios-build/Release-iphoneos/App.app Payload/
+          zip -r ToanPhat-unsigned.ipa Payload
+
+      - name: Upload Unsigned IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: toan-phat-ios-unsigned-ipa
+          path: mobile-apk/ToanPhat-unsigned.ipa
+          if-no-files-found: error

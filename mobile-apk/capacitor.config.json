@@ -1,0 +1,26 @@
+{
+  "appId": "vn.ap.toanphat",
+  "appName": "Toàn Phát",
+  "webDir": "www",
+  "server": {
+    "url": "https://toanphat.ap.vn",
+    "cleartext": false,
+    "androidScheme": "https",
+    "allowNavigation": [
+      "toanphat.ap.vn",
+      "*.toanphat.ap.vn",
+      "script.google.com",
+      "*.script.google.com",
+      "script.googleusercontent.com",
+      "*.googleusercontent.com",
+      "accounts.google.com",
+      "docs.google.com",
+      "drive.google.com"
+    ]
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}

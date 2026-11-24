@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toàn Phát</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: #101b2f;
+        color: #f8fafc;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .card {
+        max-width: 400px;
+        width: 100%;
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 14px;
+        padding: 32px 28px;
+        text-align: center;
+      }
+      img { width: 72px; height: 72px; border-radius: 16px; margin-bottom: 16px; }
+      h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+      p { font-size: 14px; line-height: 1.5; color: #94a3b8; margin-bottom: 22px; }
+      button {
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        border-radius: 10px;
+        background: #1d4ed8;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img src="build/icon.png" alt="Toàn Phát" />
+      <h1>Toàn Phát</h1>
+      <p>Không thể kết nối tới máy chủ phần mềm. Vui lòng kiểm tra đường truyền mạng và thử lại.</p>
+      <button onclick="window.location.href='https://toanphat.ap.vn'">
+        Thử kết nối lại
+      </button>
+    </div>
+  </body>
+</html>
